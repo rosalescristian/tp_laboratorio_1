@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1586685815 source:c:\users\crisp\desktop\labo 1\tp_laboratorio_1_2019\tp_1_calculadora\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+
+1586686183 c:\users\crisp\desktop\labo 1\tp_laboratorio_1_2019\tp_1_calculadora\funciones.h
+
+1586689924 source:c:\users\crisp\desktop\labo 1\tp_laboratorio_1_2019\tp_1_calculadora\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+
+1586691977 source:c:\users\crisp\desktop\tp_laboratorio_1\tp_1\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+
+1586686183 c:\users\crisp\desktop\tp_laboratorio_1\tp_1\funciones.h
+
+1586685815 source:c:\users\crisp\desktop\tp_laboratorio_1\tp_1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+
