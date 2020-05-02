@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1588289866 source:d:\utn fra\2020\laboratorio de programacion 1\repositorio 2020\laboratorio_1_2020\tp_2\empleados.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn.h"
+	"empleados.h"
+
+1588288910 d:\utn fra\2020\laboratorio de programacion 1\repositorio 2020\laboratorio_1_2020\tp_2\utn.h
+
+1588285261 d:\utn fra\2020\laboratorio de programacion 1\repositorio 2020\laboratorio_1_2020\tp_2\empleados.h
+
+1588282270 source:d:\utn fra\2020\laboratorio de programacion 1\repositorio 2020\laboratorio_1_2020\tp_2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn.h"
+	"empleados.h"
+
+1588289692 source:d:\utn fra\2020\laboratorio de programacion 1\repositorio 2020\laboratorio_1_2020\tp_2\utn.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"utn.h"
+	"empleados.h"
+
