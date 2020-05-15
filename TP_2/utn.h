@@ -67,4 +67,7 @@ char getChar(char *resultado,
 			char maximo,
 			int reintentos);
 int isCharOrSpace(char buffer[]);
+int isFloat(char buffer[]);
+int isInt(char buffer[]);
+int isChar(char buffer[]);
 #endif /* UTN_H_ */

@@ -813,9 +813,76 @@ int isCharOrSpace(char buffer[])
     return retorno;
 }
 
-/*
-int isFloat(float buffer)
+int isChar(char buffer[])
 {
+    int retorno = EXIT_ERROR;
+    int errorCarga;
 
+    for(int i=0;i<strlen(buffer);i++)
+    {
+        if((buffer[i]>='A' && buffer[i]<='Z') || (buffer[i]>='a' && buffer[i]<='z')|| buffer[i]=='\0')
+        {
+            errorCarga = 0;
+        }
+        else
+        {
+            errorCarga = -1;
+            break;
+        }
+    }
+    if(errorCarga == 0)
+    {
+        retorno = EXIT_SUCCESS;
+    }
+    return retorno;
 }
-*/
+
+int isInt(char buffer[])
+{
+    int retorno = EXIT_ERROR;
+    int errorCarga;
+
+    for(int i=0;i<strlen(buffer);i++)
+    {
+        if(buffer[i]>='0' && buffer[i]<='9')
+        {
+            errorCarga = 0;
+        }
+        else
+        {
+            errorCarga = -1;
+            break;
+        }
+    }
+    if(errorCarga==0)
+    {
+        retorno = EXIT_SUCCESS;
+    }
+    return retorno;
+}
+
+int isFloat(char buffer[])
+{
+    int contadorPuntos = 0;
+    int errorCarga;
+    int retorno = EXIT_ERROR;
+
+    for(int i=0;i<strlen(buffer);i++)
+        {
+            if((buffer[i]>='0' && buffer[i]<='9') || (buffer[i]='.' && contadorPuntos == 0))
+            {
+                contadorPuntos++;
+                errorCarga = 0;
+            }
+            else
+            {
+                errorCarga = -1;
+                break;
+            }
+        }
+        if(errorCarga==0)
+        {
+            retorno = EXIT_SUCCESS;
+        }
+    return retorno;
+}
