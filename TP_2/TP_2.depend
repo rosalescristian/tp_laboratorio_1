@@ -25,3 +25,29 @@
 	"utn.h"
 	"empleados.h"
 
+1589502217 source:d:\utn fra\2020\laboratorio de programacion 1\tp_laboratorio_1\tp_2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn.h"
+	"empleados.h"
+
+1589502464 d:\utn fra\2020\laboratorio de programacion 1\tp_laboratorio_1\tp_2\utn.h
+
+1589505877 d:\utn fra\2020\laboratorio de programacion 1\tp_laboratorio_1\tp_2\empleados.h
+
+1589508224 source:d:\utn fra\2020\laboratorio de programacion 1\tp_laboratorio_1\tp_2\utn.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"utn.h"
+	"empleados.h"
+
+1589509548 source:d:\utn fra\2020\laboratorio de programacion 1\tp_laboratorio_1\tp_2\empleados.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn.h"
+	"empleados.h"
+

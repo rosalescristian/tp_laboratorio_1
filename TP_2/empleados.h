@@ -51,16 +51,21 @@ int getLastNameEmpleado(char *pResultado,
                         int minimo,
                         int maximo,
                         int reintentos);
-int getSalary(float *resultado,
-			  char *mensaje,
-			  char *mensajeError,
-			  float minimo,
-			  float maximo,
-			  float reintentos);
+int getSalary(	float *pResultado,
+			char *pMensaje,
+			char *pMensajeError,
+			float minimo,
+			int reintentos);
 int getSector(  int *pResultado,
                 char *pMensaje,
                 char *pMensajeError,
                 int minimo,
                 int maximo,
                 int reintentos);
+int getId(	int *pResultado,
+			char *pMensaje,
+			char *pMensajeError,
+			int minimo,
+			int maximo,
+			int reintentos);
 #endif /* EMPLEADO_H_ */

@@ -35,7 +35,7 @@ int funcionMenu(void)
     estructuraVacia = 1;
     retorno = EXIT_ERROR;
 	do{
-        if(getInt(&opcion,"\n\nSeleccione la opcion deseada:\n\t 1- Alta Empleado\n\t 2- Modificar Empleado\n\t 3- Baja Empleado\n\t 4- Listado de Empleado\n\t 5- Total y Promedio de Salarios. Q de Empleados con Salario > Promedio\n\t 6- Salir\n","Ha ingresado una opción invalida, reintente.",1,6,2)==0)
+        if(getInt(&opcion,"\n\nSeleccione la opcion deseada:\n\t 1- Alta Empleado\n\t 2- Modificar Empleado\n\t 3- Baja Empleado\n\t 4- Listado de Empleado\n\t 5- Total y Promedio de Salarios. Q de Empleados con Salario > Promedio\n\t 6- Salir\n","Ha ingresado una opcion invalida, reintente.",1,6,0)==0)
         {
 
             switch(opcion)
@@ -81,7 +81,6 @@ int funcionMenu(void)
                         break;
                     }
                     ordenarStructEmpleadosByNameOrLastName(aEmpleado, QTY_EMPLEADOS);
-                    system("cls");
                     imprimirArrayEmpleados(aEmpleado, QTY_EMPLEADOS);
                     break;
                 case 5:
@@ -161,7 +160,7 @@ int imprimeArrayInt(int array[],int limite )
  * \return devuelve 0 si el proceso fue exitoso o -1 si hubo algun error
  *
  */
-int getInt(	int *pResultado,
+/*int getInt(	int *pResultado,
 			char *pMensaje,
 			char *pMensajeError,
 			int minimo,
@@ -183,6 +182,51 @@ int getInt(	int *pResultado,
 		printf("%s",pMensajeError);
 		reintentos--;
 	}while(reintentos >= 0);
+	return retorno;
+}*/
+int getInt(	int *pResultado,
+			char *pMensaje,
+			char *pMensajeError,
+			int minimo,
+			int maximo,
+			int reintentos)
+{
+    int errorCarga;
+	int retorno = EXIT_ERROR;
+	char buffer[255];
+	int bufferDos;
+	do
+		{
+			printf("%s",pMensaje);
+			fflush(stdin);
+			fgets(buffer,sizeof(buffer),stdin);
+			buffer[strlen(buffer)-1]='\0'; // con esto contamos el largo del string, y en la ultima posicion ponemos el "\0"
+            for(int i=0;i<strlen(buffer);i++)
+            {
+                if(buffer[i]>='0' && buffer[i]<='9')
+                {
+                    errorCarga = 0;
+                }
+                else
+                {
+                    errorCarga = -1;
+                    break;
+                }
+            }
+			if(errorCarga==0)
+            {
+                bufferDos=atoi(buffer);
+                if(bufferDos >= minimo && bufferDos <= maximo)
+                {
+                    //retorno = bufferDos;
+                    *pResultado = bufferDos;
+                    retorno = EXIT_SUCCESS;
+                    break;
+                }
+            }
+			printf("%s\n",pMensajeError);
+			reintentos--;
+		}while(reintentos >= 0);
 	return retorno;
 }
 
@@ -744,3 +788,34 @@ char getChar(char *resultado,
 	return retorno;
 }
 
+
+int isCharOrSpace(char buffer[])
+{
+    int retorno = EXIT_ERROR;
+    int errorCarga;
+
+    for(int i=0;i<strlen(buffer);i++)
+    {
+        if((buffer[i]>='A' && buffer[i]<='Z') || (buffer[i]>='a' && buffer[i]<='z') || buffer[i]==' ' || buffer[i]=='\0')
+        {
+            errorCarga = 0;
+        }
+        else
+        {
+            errorCarga = -1;
+            break;
+        }
+    }
+    if(errorCarga == 0)
+    {
+        retorno = EXIT_SUCCESS;
+    }
+    return retorno;
+}
+
+/*
+int isFloat(float buffer)
+{
+
+}
+*/

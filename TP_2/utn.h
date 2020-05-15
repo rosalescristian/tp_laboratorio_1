@@ -66,5 +66,5 @@ char getChar(char *resultado,
 			char minimo,
 			char maximo,
 			int reintentos);
-
+int isCharOrSpace(char buffer[]);
 #endif /* UTN_H_ */

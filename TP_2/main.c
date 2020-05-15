@@ -20,7 +20,7 @@ int main(void)
     int retorno;
 
     retorno = EXIT_ERROR;
-    if(funcionMenu())
+    if(funcionMenu()==EXIT_SUCCESS)
     {
         retorno = EXIT_SUCCESS;
     }

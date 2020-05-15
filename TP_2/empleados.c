@@ -116,16 +116,16 @@ int ordenarStructEmpleadosByNameOrLastName(struct sEmployee *aEmpleado, int cant
 			for(i=0;i<cantidad-1;i++)
 			{
 				j = i+1;
-				if(strncmp(aEmpleado[i].lastName,aEmpleado[j].lastName,QTY_CARACTERES)>0)
+				if(strncmp(aEmpleado[i].lastName,aEmpleado[j].lastName,QTY_CARACTERES)>0 && aEmpleado[i].isEmpty == 0 && aEmpleado[j].isEmpty == 0)
 				{
 					fSwap = 1;
 					bEmpleado = aEmpleado[i];
 					aEmpleado[i]=aEmpleado[j];
 					aEmpleado[j]=bEmpleado;
 				}
-				else if(strncmp(aEmpleado[i].lastName,aEmpleado[j].lastName,QTY_CARACTERES)==0)
+				else if(strncmp(aEmpleado[i].lastName,aEmpleado[j].lastName,QTY_CARACTERES)==0 && aEmpleado[i].isEmpty == 0 && aEmpleado[j].isEmpty == 0)
 				{
-					if(aEmpleado[i].sector > aEmpleado[j].sector)
+					if(aEmpleado[i].sector > aEmpleado[j].sector && aEmpleado[i].isEmpty == 0 && aEmpleado[j].isEmpty == 0)
 					{
 						fSwap = 1;
 						bEmpleado = aEmpleado[i];
@@ -135,7 +135,7 @@ int ordenarStructEmpleadosByNameOrLastName(struct sEmployee *aEmpleado, int cant
 				}
 			}
 			retorno = EXIT_SUCCESS;
-		}while(fSwap);
+		}while(fSwap==1);
 	}
 	return retorno;
 }
@@ -273,9 +273,9 @@ int bajaEmpleadosPorId(struct sEmployee *aArray, int cantidad)
         {
             for(i=0;i<cantidad;i++)
             {
-                if(aArray[i].id == idEditable)
+                if(aArray[i].id == idEditable && aArray[i].isEmpty == 0) // usar directamente el buscar empleado por id
                 {
-                    system("cls");
+                    system("cls"); //usar un mostrar Empleado unico
                     printf("Va a eliminar el siguiente empleado:\n\tId: %d - Nombre: %s - Apellido: %s - Salario: %.2f - Sector: %d\n", aArray[i].id,aArray[i].name,aArray[i].lastName,aArray[i].salary,aArray[i].sector);
                     getChar(&seguir, "Desea proceder(S/N): \n", "La respuesta es invalida, reintente.\n",'N','S',3);
                     if(seguir == 'S')
@@ -287,6 +287,7 @@ int bajaEmpleadosPorId(struct sEmployee *aArray, int cantidad)
 
                 }
             }
+
         }
 
 	}
@@ -318,9 +319,16 @@ do{
     retorno = EXIT_ERROR;
     seguir = 'N';
 
-    if(getInt(&idEditable,"\nIngrese el id a editar: \n\n","Ha seleccionado una opcion no valida. Reintente\n\n",0,QTY_EMPLEADOS-1,3)==0)
+    if(getId(&idEditable,"\nIngrese el id a editar: \n\n","Ha seleccionado una opcion no valida. Reintente\n\n",0,QTY_EMPLEADOS-1,3)==0)
+
     {
-        empleado=aEmpleado[idEditable];
+        for(int i=0;i<QTY_EMPLEADOS;i++)
+        {
+            if(aEmpleado[i].id == idEditable && aEmpleado[i].isEmpty == 0)
+            {
+                empleado=aEmpleado[i];
+            }
+        }
         printf("1.Nombre: %s\t 2.Apellido: %s\t 3.Salario: %.2f\t 4.Sector: %d\t\n",empleado.name,empleado.lastName,empleado.salary,empleado.sector);
         if(getInt(&campoEditable,"Ingrese el campo a editar (1/4)\n\n","Ha elegido un campo invalido, reintente.\n",1,4,3)==0)
         {
@@ -348,7 +356,7 @@ do{
                     break;
                 case 3:
                     printf("Va a editar el Salario: %.2f\n", empleado.salary);
-                    if(getSalary(&bSalary,"Ingrese el nuevo Salario: \n", "Ha ingresado un salario Invalido. Reintente\n",0,999999999,3)==0)
+                    if(getSalary(&bSalary,"Ingrese el nuevo Salario: \n", "Ha ingresado un salario Invalido. Reintente\n",1,3)==0)
                     {
                         empleado.salary=bSalary;
                         printf("El nuevo Salario es: %.2f\n", empleado.salary);
@@ -376,7 +384,6 @@ do{
     retorno = EXIT_SUCCESS;
 return retorno;
 }
-
 /** \brief Recupero los valores de cadena de caracteres para almacenar en la estructura
  *
  * \param aEmpleado recibe la direccion de memoria donde se encuentra almacenada la estructura
@@ -418,7 +425,7 @@ int getEmpleadoStr(	struct sEmployee *aEmpleado,
             {
                 strncpy(bEmpleado.lastName,bLastName,QTY_CARACTERES);
             }
-            if(getSalary(&bSalary, "\nIngrese el sueldo del empleado:", "Ha ingresado un valor invalido, reintente.",0,99999999999,3)==0)
+            if(getSalary(&bSalary, "\nIngrese el sueldo del empleado: ", "Ha ingresado un valor invalido, reintente.",1,3)==0)
             {
                 bEmpleado.salary=bSalary;
             }
@@ -473,10 +480,13 @@ int getNameEmpleado(    char *bName,
 			buffer[strlen(buffer)-1]='\0';
 			if(strlen(buffer)<=maximo && strlen(buffer)>=minimo)
 			{
-				strncpy(bName,buffer,maximo+1);
-				retorno = EXIT_SUCCESS;
-				break;
-			}
+                if(isCharOrSpace(buffer)==EXIT_SUCCESS)
+                {
+                    strncpy(bName,buffer,maximo+1);
+                    retorno = EXIT_SUCCESS;
+                    break;
+                }
+            }
 			printf("%s",pMensajeError);
 			reintentos--;
 		}while(reintentos >= 0);
@@ -519,10 +529,13 @@ int getLastNameEmpleado(char *bLastName,
 			buffer[strlen(buffer)-1]='\0';
 			if(strlen(buffer)<=maximo && strlen(buffer)>=minimo)
 			{
-				strncpy(bLastName,buffer,maximo+1);
-				retorno = EXIT_SUCCESS;
-				break;
-			}
+                if(isCharOrSpace(buffer)==EXIT_SUCCESS)
+                {
+                    strncpy(bLastName,buffer,maximo+1);
+                    retorno = EXIT_SUCCESS;
+                    break;
+                }
+            }
 			printf("%s",pMensajeError);
 			reintentos--;
 		}while(reintentos >= 0);
@@ -541,7 +554,7 @@ int getLastNameEmpleado(char *bLastName,
  * \return Devuelve 0 si pudo capturar el dato o -1 si hubo algun error
  *
  */
-int getSalary(float *resultado,
+/*int getSalary(float *resultado,
 			  char *mensaje,
 			  char *mensajeError,
 			  float minimo,
@@ -574,6 +587,52 @@ if(	resultado != NULL &&
 	}while(reintentos >= 0);
 }
 return retorno;
+}*/
+int getSalary(	float *pResultado,
+			char *pMensaje,
+			char *pMensajeError,
+			float minimo,
+			int reintentos)
+{
+    int errorCarga;
+    int contadorPuntos = 0;
+	int retorno = EXIT_ERROR;
+	char buffer[255];
+	float bufferDos;
+	do
+		{
+			printf("%s",pMensaje);
+			fflush(stdin);
+			fgets(buffer,sizeof(buffer),stdin);
+			buffer[strlen(buffer)-1]='\0'; // con esto contamos el largo del string, y en la ultima posicion ponemos el "\0"
+            for(int i=0;i<strlen(buffer);i++)
+            {
+                if((buffer[i]>='0' && buffer[i]<='9') || (buffer[i]='.' && contadorPuntos == 0))
+                {
+                    contadorPuntos++;
+                    errorCarga = 0;
+                }
+                else
+                {
+                    errorCarga = -1;
+                    break;
+                }
+            }
+			if(errorCarga==0)
+            {
+                bufferDos=atof(buffer);
+                if(bufferDos >= minimo)
+                {
+                    //retorno = bufferDos;
+                    *pResultado = bufferDos;
+                    retorno = EXIT_SUCCESS;
+                    break;
+                }
+            }
+			printf("%s\n",pMensajeError);
+			reintentos--;
+		}while(reintentos >= 0);
+	return retorno;
 }
 
 /** \brief Capturo del usuario el campo sector del elemento Empleado dentro de la estructura
@@ -587,39 +646,50 @@ return retorno;
  * \return Devuelve 0 si pudo capturar el dato o -1 si hubo algun error
  *
  */
-int getSector(  int *pResultado, // Recupera un valor Int
+int getSector(  int *pResultado,
                 char *pMensaje,
                 char *pMensajeError,
                 int minimo,
                 int maximo,
                 int reintentos)
 {
+    int errorCarga;
 	int retorno = EXIT_ERROR;
-	int buffer;
-	if(	pResultado != NULL &&
-		pMensaje	!= NULL &&
-		pMensajeError != NULL &&
-		minimo < maximo &&
-		reintentos >= 0)
-	{
-		do
+	char buffer[255];
+	int bufferDos;
+	do
 		{
 			printf("%s",pMensaje);
-            fflush(stdin);
-			if(scanf("%d",&buffer)==1)
-			{
-				if(buffer >= minimo && buffer <= maximo)
-				{
-					retorno = EXIT_SUCCESS;
-					*pResultado = buffer;
-					break;
-				}
-			}
-			printf("%s",pMensajeError);
+			fflush(stdin);
+			fgets(buffer,sizeof(buffer),stdin);
+			buffer[strlen(buffer)-1]='\0'; // con esto contamos el largo del string, y en la ultima posicion ponemos el "\0"
+            for(int i=0;i<strlen(buffer);i++)
+            {
+                if(buffer[i]>='0' && buffer[i]<='9')
+                {
+                    errorCarga = 0;
+                }
+                else
+                {
+                    errorCarga = -1;
+                    break;
+                }
+            }
+			if(errorCarga==0)
+            {
+                bufferDos=atoi(buffer);
+                if(bufferDos >= minimo && bufferDos <= maximo)
+                {
+                    //retorno = bufferDos;
+                    *pResultado = bufferDos;
+                    retorno = EXIT_SUCCESS;
+                    break;
+                }
+            }
+			printf("%s\n",pMensajeError);
 			reintentos--;
 		}while(reintentos >= 0);
-	}
-	return retorno;
+    return retorno;
 }
 
 /** \brief Calcula el promedio de Salarios de la estructura
@@ -695,4 +765,50 @@ int sueldosSobrePromedio(struct sEmployee *aEmpleado,int limite,int *pResultado,
 
     }
     return retorno;
+}
+
+int getId(	int *pResultado,
+			char *pMensaje,
+			char *pMensajeError,
+			int minimo,
+			int maximo,
+			int reintentos)
+{
+    int errorCarga;
+	int retorno = EXIT_ERROR;
+	char buffer[255];
+	int bufferDos;
+	do
+		{
+			printf("%s",pMensaje);
+			fflush(stdin);
+			fgets(buffer,sizeof(buffer),stdin);
+			buffer[strlen(buffer)-1]='\0'; // con esto contamos el largo del string, y en la ultima posicion ponemos el "\0"
+            for(int i=0;i<strlen(buffer);i++)
+            {
+                if((buffer[i]>='0' && buffer[i]<='9') || buffer[i] == '\0')
+                {
+                    errorCarga = 0;
+                }
+                else
+                {
+                    errorCarga = -1;
+                    break;
+                }
+            }
+			if(errorCarga==0)
+            {
+                bufferDos=atoi(buffer);
+                if(bufferDos >= minimo && bufferDos <= maximo)
+                {
+                   // retorno = bufferDos;
+                    *pResultado = bufferDos;
+                    retorno = EXIT_SUCCESS;
+                    break;
+                }
+            }
+			printf("%s\n",pMensajeError);
+			reintentos--;
+		}while(reintentos >= 0);
+	return retorno;
 }
