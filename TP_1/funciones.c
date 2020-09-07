@@ -30,8 +30,22 @@ int funcionMenu(void)
 
 	do{
         printf("\n\t");
-        printf("1- Ingrese operando 1\n\t");
-        printf("2- Ingrese operando 2\n\t");
+        if(operandoUnoCargado == 0)
+        {
+            printf("1- Ingrese 1er Operando (A=X)\n\t");
+        }
+        else
+        {
+            printf("1- Ingrese 1er Operando (A=%.2f)\n\t",operandoUno);
+        }
+        if(operandoDosCargado == 0)
+        {
+            printf("2- Ingrese 2do Operando (B=Y)\n\t");
+        }
+        else
+        {
+            printf("2- Ingrese 2do Operando (B=%.2f)\n\t",operandoDos);
+        }
         printf("3- Calcular todas las operaciones\n\t");
         if(operandoUnoCargado == 0 || operandoDosCargado == 0)
         {
@@ -135,8 +149,8 @@ int funcionMenu(void)
 /** \brief : SUMA: Calcula la suma entre dos valores flotantes.
  *
  * \param *resultado float: Recibe la direccion de memoria donde se almacena el resultado de la operacion.
- * \param *operando1 float: Recibe la direccion de memoria del primer operando.
- * \param *operando2 float: Recibe la direccion de memoria del segundo operando.
+ * \param *operandoUno float: Recibe la direccion de memoria del primer operando.
+ * \param *operandoDos float: Recibe la direccion de memoria del segundo operando.
  * \return int: Devuelve 0 o -1 dependiendo si se calculo el resultado de la operacion.
  *
  */
@@ -158,8 +172,8 @@ int funcionSuma(float *resultado,float *operandoUno,float *operandoDos)
 /** \brief : RESTA: Calcula la resta entre dos valores flotantes.
  *
  * \param *resultado float: Recibe la direccion de memoria donde se almacena el resultado de la operacion.
- * \param *operando1 float: Recibe la direccion de memoria del primer operando.
- * \param *operando2 float: Recibe la direccion de memoria del segundo operando.
+ * \param *operandoUno float: Recibe la direccion de memoria del primer operando.
+ * \param *operandoDos float: Recibe la direccion de memoria del segundo operando.
  * \return int: Devuelve 0 o -1 dependiendo si se calculo el resultado de la operacion.
  *
  */
@@ -182,8 +196,8 @@ int funcionResta(float *resultado,float *operandoUno,float *operandoDos)
 /** \brief : DIVISION: Calcula la division entre dos valores flotantes.
  *
  * \param *resultado float: Recibe la direccion de memoria donde se almacena el resultado de la operacion.
- * \param *operando1 float: Recibe la direccion de memoria del primer operando.
- * \param *operando2 float: Recibe la direccion de memoria del segundo operando.
+ * \param *operandoUno float: Recibe la direccion de memoria del primer operando.
+ * \param *operandoDos float: Recibe la direccion de memoria del segundo operando.
  * \return int: Devuelve 0 o -1 dependiendo si se calculo el resultado de la operacion.
  *
  */
@@ -208,8 +222,8 @@ int funcionDivision(float *resultado, float *operandoUno, float *operandoDos)
 /** \brief : Multiplicacion: Calcula la multiplicacion entre dos valores flotantes.
  *
  * \param *resultado float: Recibe la direccion de memoria donde se almacena el resultado de la operacion.
- * \param *operando1 float: Recibe la direccion de memoria del primer operando.
- * \param *operando2 float: Recibe la direccion de memoria del segundo operando.
+ * \param *operandoUno float: Recibe la direccion de memoria del primer operando.
+ * \param *operandoDos float: Recibe la direccion de memoria del segundo operando.
  * \return int: Devuelve 0 o -1 dependiendo si se calculo el resultado de la operacion.
  *
  */

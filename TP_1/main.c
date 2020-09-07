@@ -3,7 +3,7 @@
 *
 *Objetivo: Desarrollar una calculadora con sus funciones en una biblioteca aparte.
 *
-*Version: 1.0 - 20200412
+*Version: 1.0 - 20200912
 *Autor: Cristian Rosales
 *
 ********************************************************************/
