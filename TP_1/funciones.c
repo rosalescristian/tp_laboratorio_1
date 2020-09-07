@@ -10,9 +10,9 @@
  */
 int funcionMenu(void)
 {
-    float operando1;
+    float operandoUno;
     int operandoUnoCargado;
-    float operando2;
+    float operandoDos;
     int operandoDosCargado;
 	float suma;
 	float resta;
@@ -29,29 +29,61 @@ int funcionMenu(void)
     operacionesCalculadas = 0;
 
 	do{
-        getInt(&operacion,"Seleccione la opcion deseada:\n\t 1- Ingrese operando 1\n\t 2- Ingrese operando 2\n\t 3- Calcular todas las operaciones\n\t\ta)Calcular la Suma(A+B)\n\t\tb)Calcular la resta(A-B)\n\t\tc)Calcular la division(A/B)\n\t\td)Calcular la multiplicacion(A*B)\n\t\te)Calcular el factorial(A! - B!)\n\t 4- Informar Resultados \n\t 5- Salir\n\n","Ha ingresado una opcion invalida, reintente.\n\n",1,5,2);
+        printf("\n\t");
+        printf("1- Ingrese operando 1\n\t");
+        printf("2- Ingrese operando 2\n\t");
+        printf("3- Calcular todas las operaciones\n\t");
+        if(operandoUnoCargado == 0 || operandoDosCargado == 0)
+        {
+            printf("\ta)Calcular la Suma(A+B)\n\t");
+            printf("\tb)Calcular la resta(A-B)\n\t");
+            printf("\tc)Calcular la division(A/B)\n\t");
+            printf("\td)Calcular la multiplicacion(A*B)\n\t");
+            printf("\te)Calcular el factorial(A! - B!)\n\t");
+        }
+        else
+        {
+            printf("\ta)Calcular la Suma(%.2f+%.2f)\n\t",operandoUno,operandoDos);
+            printf("\tb)Calcular la resta(%.2f-%.2f)\n\t",operandoUno,operandoDos);
+            printf("\tc)Calcular la division(%.2f/%.2f)\n\t",operandoUno,operandoDos);
+            printf("\td)Calcular la multiplicacion(%.2f*%.2f)\n\t",operandoUno,operandoDos);
+            printf("\te)Calcular el factorial(%.2f! - %.2f!)\n\t",operandoUno,operandoDos);
+        }
+        printf("4- Informar Resultados \n\t");
+        printf("5- Salir\n\n");
+        getInt(&operacion,"Seleccione la opcion deseada\n","Ha ingresado una opcion invalida, reintente.\n\n",1,5,2);
 
         switch(operacion){
             case 1:
                 system("cls");
-                getFloat(&operando1,"Ingresar 1er Operando: \n","Ha ingresado un dato invalido. Reintente.\n",-100000,100000,3);
+                getFloat(&operandoUno,"Ingresar 1er Operando: \n","Ha ingresado un dato invalido. Reintente.\n",-100000,100000,3);
                 operandoUnoCargado = 1;
                 break;
             case 2:
                 system("cls");
-                getFloat(&operando2,"Ingresar 2do Operando: \n","Ha ingresado un dato invalido. Reintente.\n",-100000,100000,3);
+                getFloat(&operandoDos,"Ingresar 2do Operando: \n","Ha ingresado un dato invalido. Reintente.\n",-100000,100000,3);
                 operandoDosCargado = 1;
                 break;
             case 3:
                 if(operandoUnoCargado == 1 && operandoDosCargado == 1)
                 {
-                    funcionSuma(&suma,&operando1,&operando2);
-                    funcionResta(&resta,&operando1,&operando2);
-                    funcionDivision(&division,&operando1,&operando2);
-                    funcionMultiplicacion(&multiplicacion,&operando1,&operando2);
-                    funcionFactorial(&factorialA,&operando1);
-                    funcionFactorial(&factorialB,&operando2);
+                    funcionSuma(&suma,&operandoUno,&operandoDos);
+                    funcionResta(&resta,&operandoUno,&operandoDos);
+                    if(operandoDos != 0)
+                    {
+                        funcionDivision(&division,&operandoUno,&operandoDos);
+                    }
+                    funcionMultiplicacion(&multiplicacion,&operandoUno,&operandoDos);
+                    if(operandoUno >= 0)
+                    {
+                        funcionFactorial(&factorialA,&operandoUno);
+                    }
+                    if(operandoDos >= 0)
+                    {
+                        funcionFactorial(&factorialB,&operandoDos);
+                    }
                     operacionesCalculadas = 1;
+                    system("cls");
                 }
                 else
                 {
@@ -61,42 +93,33 @@ int funcionMenu(void)
             case 4:
                 if(operacionesCalculadas == 1)
                 {
-                    if(funcionSuma(&suma,&operando1,&operando2)==0)
-                           {
-                               printf("\t\ta) El resultado de %.2f + %.2f es: %.2f\n",operando1,operando2,suma);
-                           }
-                        if(funcionResta(&resta,&operando1,&operando2)==0)
-                           {
-                               printf("\t\tb) El resultado de %.2f - %.2f es: %.2f\n",operando1,operando2,resta);
-                           }
-                        if(funcionDivision(&division,&operando1,&operando2)==-1)
-                            {
-                                printf("No es posible dividir por cero\n");
-                            }
-                            else
-                                {
-                                printf("\t\tc) El resultado de %.2f / %.2f es: %.2f\n",operando1,operando2,division);
-                                }
-                        if(funcionMultiplicacion(&multiplicacion,&operando1,&operando2)==0)
-                           {
-                               printf("\t\td) El resultado de %.2f * %.2f es: %.2f\n",operando1,operando2,multiplicacion);
-                           }
-                        if(funcionFactorial(&factorialA,&operando1)==-1)
-                        {
-                            printf("No es posible calcular el factorial de %.2f por ser un nro negativo\n",operando1);
-                        }
-                            else
-                            {
-                                printf("\t\te) El factorial de %.2f es : %.2f\n",operando1,factorialA);
-                            }
-                       if(funcionFactorial(&factorialB,&operando2)==-1)
-                        {
-                            printf("No es posible calcular el factorial de %.2f por ser un nro negativo.\n",operando2);
-                        }
-                            else
-                            {
-                                printf("\t\tf) El factorial de %.2f es : %.2f\n\n",operando2,factorialB);
-                            }
+                    printf("\t\ta) El resultado de %.2f + %.2f es: %.2f\n",operandoUno,operandoDos,suma);
+                    printf("\t\tb) El resultado de %.2f - %.2f es: %.2f\n",operandoUno,operandoDos,resta);
+                    if(operandoDos==0)
+                    {
+                        printf("\t\tc) No es posible dividir por cero\n");
+                    }
+                    else
+                    {
+                        printf("\t\tc) El resultado de %.2f / %.2f es: %.2f\n",operandoUno,operandoDos,division);
+                    }
+                    printf("\t\td) El resultado de %.2f * %.2f es: %.2f\n",operandoUno,operandoDos,multiplicacion);
+                    if(operandoUno<0)
+                    {
+                        printf("\t\te) No es posible calcular el factorial de %.2f por ser un nro negativo\n",operandoUno);
+                    }
+                    else
+                    {
+                        printf("\t\te) El factorial de %.2f es : %.2f\n",operandoUno,factorialA);
+                    }
+                    if(operandoDos<0)
+                    {
+                        printf("\t\tf) No es posible calcular el factorial de %.2f por ser un nro negativo\n\n",operandoDos);
+                    }
+                    else
+                    {
+                        printf("\t\tf) El factorial de %.2f es : %.2f\n\n",operandoDos,factorialB);
+                    }
                 }
                 else
                 {
@@ -117,15 +140,15 @@ int funcionMenu(void)
  * \return int: Devuelve 0 o -1 dependiendo si se calculo el resultado de la operacion.
  *
  */
-int funcionSuma(float *resultado,float *operando1,float *operando2)
+int funcionSuma(float *resultado,float *operandoUno,float *operandoDos)
  {
     int retorno;
     float buffer;
     retorno = EXIT_ERROR;
 
-    if(resultado != NULL && operando1 != NULL && operando2 != NULL)
+    if(resultado != NULL && operandoUno != NULL && operandoDos != NULL)
     {
-        buffer=*operando1+*operando2;
+        buffer=*operandoUno+*operandoDos;
         *resultado=buffer;
         retorno = EXIT_SUCCESS;
     }
@@ -140,15 +163,15 @@ int funcionSuma(float *resultado,float *operando1,float *operando2)
  * \return int: Devuelve 0 o -1 dependiendo si se calculo el resultado de la operacion.
  *
  */
-int funcionResta(float *resultado,float *operando1,float *operando2)
+int funcionResta(float *resultado,float *operandoUno,float *operandoDos)
  {
     int retorno;
     float buffer;
     retorno = EXIT_ERROR;
 
-    if(resultado != NULL && operando1 != NULL && operando2 != NULL)
+    if(resultado != NULL && operandoUno != NULL && operandoDos != NULL)
     {
-        buffer=*operando1-*operando2;
+        buffer=*operandoUno-*operandoDos;
         *resultado=buffer;
         retorno = EXIT_SUCCESS;
     }
@@ -164,19 +187,19 @@ int funcionResta(float *resultado,float *operando1,float *operando2)
  * \return int: Devuelve 0 o -1 dependiendo si se calculo el resultado de la operacion.
  *
  */
-int funcionDivision(float *resultado, float *operando1, float *operando2)
+int funcionDivision(float *resultado, float *operandoUno, float *operandoDos)
  {
     float buffer;
     int retorno;
     retorno = EXIT_SUCCESS;
 
-    if (resultado != NULL && operando1 != NULL && operando2 != NULL)
+    if (resultado != NULL && operandoUno != NULL && operandoDos != NULL)
     {
-            if(*operando2==0)
+            if(*operandoDos==0)
             {
                 retorno = EXIT_ERROR; //Muestra este mensaje si B == 0.
             }
-        buffer = *operando1/ *operando2;
+        buffer = *operandoUno/ *operandoDos;
         *resultado = buffer;
     }
     return retorno;
@@ -190,15 +213,15 @@ int funcionDivision(float *resultado, float *operando1, float *operando2)
  * \return int: Devuelve 0 o -1 dependiendo si se calculo el resultado de la operacion.
  *
  */
- int funcionMultiplicacion(float *resultado,float *operando1, float *operando2)
+ int funcionMultiplicacion(float *resultado,float *operandoUno, float *operandoDos)
  {
     int retorno;
     float buffer;
     retorno = EXIT_ERROR;
 
-    if(resultado != NULL && operando1 != NULL && operando2 != NULL)
+    if(resultado != NULL && operandoUno != NULL && operandoDos != NULL)
     {
-        buffer=(*operando1)*(*operando2);
+        buffer=(*operandoUno)*(*operandoDos);
         *resultado=buffer;
         retorno = EXIT_SUCCESS;
     }
