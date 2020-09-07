@@ -79,6 +79,7 @@ int funcionMenu(void)
                 operandoDosCargado = 1;
                 break;
             case 3:
+                system("cls");
                 if(operandoUnoCargado == 1 && operandoDosCargado == 1)
                 {
                     funcionSuma(&suma,&operandoUno,&operandoDos);
@@ -105,6 +106,7 @@ int funcionMenu(void)
                 }
                 break;
             case 4:
+                system("cls");
                 if(operacionesCalculadas == 1)
                 {
                     printf("\t\ta) El resultado de %.2f + %.2f es: %.2f\n",operandoUno,operandoDos,suma);
