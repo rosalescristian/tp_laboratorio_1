@@ -11,15 +11,15 @@
 int funcionMenu(void)
 {
     float operandoUno;
-    int operandoUnoCargado;
     float operandoDos;
-    int operandoDosCargado;
 	float suma;
 	float resta;
 	float multiplicacion;
 	float division;
 	float factorialA;
 	float factorialB;
+	int operandoUnoCargado;
+    int operandoDosCargado;
 	int retorno = EXIT_ERROR;
     int operacion;
     int operacionesCalculadas;
