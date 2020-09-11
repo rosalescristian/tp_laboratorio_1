@@ -20,10 +20,14 @@ int funcionMenu(void)
 	float factorialB;
 	int operandoUnoCargado;
     int operandoDosCargado;
-	int retorno = EXIT_ERROR;
+	int retorno;
     int operacion;
     int operacionesCalculadas;
+    int errorDivision;
+    int errorFactorialUno;
+    int errorFactorialDos;
 
+    retorno = EXIT_ERROR;
     operandoUnoCargado = 0;
     operandoDosCargado = 0;
     operacionesCalculadas = 0;
@@ -84,19 +88,10 @@ int funcionMenu(void)
                 {
                     funcionSuma(&suma,&operandoUno,&operandoDos);
                     funcionResta(&resta,&operandoUno,&operandoDos);
-                    if(operandoDos != 0)
-                    {
-                        funcionDivision(&division,&operandoUno,&operandoDos);
-                    }
+                    errorDivision=funcionDivision(&division,&operandoUno,&operandoDos);
                     funcionMultiplicacion(&multiplicacion,&operandoUno,&operandoDos);
-                    if(operandoUno >= 0)
-                    {
-                        funcionFactorial(&factorialA,&operandoUno);
-                    }
-                    if(operandoDos >= 0)
-                    {
-                        funcionFactorial(&factorialB,&operandoDos);
-                    }
+                    errorFactorialUno=funcionFactorial(&factorialA,&operandoUno);
+                    errorFactorialDos=funcionFactorial(&factorialB,&operandoDos);
                     operacionesCalculadas = 1;
                     system("cls");
                 }
@@ -109,9 +104,9 @@ int funcionMenu(void)
                 system("cls");
                 if(operacionesCalculadas == 1)
                 {
-                    printf("\t\ta) El resultado de %.2f + %.2f es: %.2f\n",operandoUno,operandoDos,suma);
+                    printf("\n\n\t\ta) El resultado de %.2f + %.2f es: %.2f\n",operandoUno,operandoDos,suma);
                     printf("\t\tb) El resultado de %.2f - %.2f es: %.2f\n",operandoUno,operandoDos,resta);
-                    if(operandoDos==0)
+                    if(errorDivision==-1)
                     {
                         printf("\t\tc) No es posible dividir por cero\n");
                     }
@@ -120,7 +115,7 @@ int funcionMenu(void)
                         printf("\t\tc) El resultado de %.2f / %.2f es: %.2f\n",operandoUno,operandoDos,division);
                     }
                     printf("\t\td) El resultado de %.2f * %.2f es: %.2f\n",operandoUno,operandoDos,multiplicacion);
-                    if(operandoUno<0)
+                    if(errorFactorialUno==-1)
                     {
                         printf("\t\te) No es posible calcular el factorial de %.2f por ser un nro negativo\n",operandoUno);
                     }
@@ -128,7 +123,7 @@ int funcionMenu(void)
                     {
                         printf("\t\te) El factorial de %.2f es : %.2f\n",operandoUno,factorialA);
                     }
-                    if(operandoDos<0)
+                    if(errorFactorialDos==-1)
                     {
                         printf("\t\tf) No es posible calcular el factorial de %.2f por ser un nro negativo\n\n",operandoDos);
                     }
@@ -136,6 +131,9 @@ int funcionMenu(void)
                     {
                         printf("\t\tf) El factorial de %.2f es : %.2f\n\n",operandoDos,factorialB);
                     }
+                    operandoUnoCargado=0;
+                    operandoDosCargado=0;
+                    operacionesCalculadas=0;
                 }
                 else
                 {
@@ -213,10 +211,13 @@ int funcionDivision(float *resultado, float *operandoUno, float *operandoDos)
     {
             if(*operandoDos==0)
             {
-                retorno = EXIT_ERROR; //Muestra este mensaje si B == 0.
+                retorno = EXIT_ERROR;
             }
-        buffer = *operandoUno/ *operandoDos;
-        *resultado = buffer;
+            else
+            {
+                buffer = *operandoUno/ *operandoDos;
+                *resultado = buffer;
+            }
     }
     return retorno;
 }

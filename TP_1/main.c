@@ -18,7 +18,7 @@
 int main()
 {
     int retorno = EXIT_FAILURE;
-    if(funcionMenu()==0)
+    if(funcionMenu()==EXIT_SUCCESS)
     {
         retorno = EXIT_SUCCESS;
     }
