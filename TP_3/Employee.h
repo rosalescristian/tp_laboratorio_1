@@ -9,32 +9,31 @@ typedef struct
     int sueldo;
 }Employee;
 
-Employee* employee_new(); // OK
-Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr, char* sueldo); //OK
-void employee_delete(); // OK
-
-int employee_setId(Employee* this,char* id); // OK
-int employee_getId(Employee* this,int id); // OK
-
-int employee_setNombre(Employee* this,char* nombre); // OK
-int employee_getNombre(Employee* this,char* nombre); // OK
-
-int employee_setHorasTrabajadas(Employee* this,char* horasTrabajadasStr); //OK
-int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas); //OK
-
-int employee_setSueldo(Employee* this,char* sueldo); //OK
-int employee_getSueldo(Employee* this,int* sueldo); //OK
-
-int isValidNombre(Employee* this, char* nombreStr); //OK
-int isValidId(Employee* this, char* id); //OK
-int isValidHsTrabajadas(Employee* this, char* horasTrabajadasStr); //OK
-int isValidSueldo(Employee* this, char* sueldo); //OK
-
-int getIdStr(char *pResultado,char *pMensaje,char *pMensajeError,int minimo,int maximo,int reintentos); // OK
-int getNombreStr(char *pResultado,char *pMensaje,char *pMensajeError,int minimo,int maximo,int reintentos); //OK
-int getHsTrabajadasStr(char *pResultado,char *pMensaje,char *pMensajeError,int minimo,int maximo,int reintentos); //OK
-int getSueldoStr(char *pResultado,char *pMensaje,char *pMensajeError,int minimo,int maximo,int reintentos); //OK
-
-int employee_sortByName(void* dato1,void* dato2); // OK
-
 #endif // EMPLOYEE_H_INCLUDED
+
+Employee* employee_new();
+Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr, char* sueldo);
+void employee_delete();
+
+int employee_setId(Employee* this,char* id);
+int employee_getId(Employee* this,int *id);
+
+int employee_setNombre(Employee* this,char* nombre);
+int employee_getNombre(Employee* this,char* nombre);
+
+int employee_setHorasTrabajadas(Employee* this,char* horasTrabajadasStr);
+int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas);
+
+int employee_setSueldo(Employee* this,char* sueldo);
+int employee_getSueldo(Employee* this,int* sueldo);
+
+int isValidNombre(Employee* this, char* nombreStr);
+int isValidId(Employee* this, char* id);
+int isValidHsTrabajadas(Employee* this, char* horasTrabajadasStr);
+int isValidSueldo(Employee* this, char* sueldo);
+
+int getIdStr(char *pResultado,char *pMensaje,char *pMensajeError,int minimo,int maximo,int reintentos);
+int getNombreStr(char *pResultado,char *pMensaje,char *pMensajeError,int minimo,int maximo,int reintentos);
+int getHsTrabajadasStr(char *bNombre,char *pMensaje,char *pMensajeError,int minimoChar,int maximoChar,int minimo,int maximo,int reintentos);
+int getSueldoStr(char *pResultado,char *pMensaje,char *pMensajeError,int minimoChar,int maximoChar,int minimo,int maximo,int reintentos);
+int employee_sortByName(void* dato1,void* dato2);

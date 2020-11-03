@@ -186,7 +186,7 @@ int funcionMenu(void)
    		LinkedList* listaEmpleados = ll_newLinkedList();
    		ll_creada = 1;
 	    do{
-			if(getInt(&opcion,"\n\nSeleccione la opcion deseada:\n\t  1- Cargar los datos de los empleados(modo txt)\n\t  2- Cargar los datos de los empleados(modo binario)\n\t  3- Alta Empleado\n\t  4- Modificar Empleado\n\t  5- Baja Empleado\n\t  6- Listar Empleados\n\t  7- Ordenar Empleados\n\t  8- Guardar los datos (modo txt)\n\t 9- Guardar los datos (modo binario) \n\t 10 - Salir\n","Ha ingresado una opcion invalida, reintente.",1,10,2)==0)
+			if(getInt(&opcion,"\n\nSeleccione la opcion deseada:\n\t  1- Cargar los datos de los empleados(modo txt)\n\t  2- Cargar los datos de los empleados(modo binario)\n\t  3- Alta Empleado\n\t  4- Modificar Empleado\n\t  5- Baja Empleado\n\t  6- Listar Empleados\n\t  7- Ordenar Empleados\n\t  8- Guardar los datos (modo txt)\n\t 9- Guardar los datos (modo binario) \n\t 10 - Salir\n\n","Ha ingresado una opcion invalida, reintente.",1,10,2)==0)
 	        {
 				switch(opcion)
 	            {
@@ -198,16 +198,20 @@ int funcionMenu(void)
 	                	}
                         break;
 	                case 2:
-	                    if(cargaBin == 1)
+	                    if(cargaBin == 0)
                         {
-                            if(controller_loadFromBinary("data.bin",listaEmpleados))
+                            if(controller_loadFromBinary("data.bin",listaEmpleados)==0)
                             {
                                 listaEmpleadosVacia = 0;
+                                cargaBin = 1;
                                 printf("\n\t\tDatos Cargados correctamente.\n\n");
                                 break;
                             }
+                            else
+                            {
+                                printf("No hay datos de tipo binario para cargar. O ya han sido cargados.\n");
+                            }
                         }
-                        printf("No hay datos de tipo binario para cargar.\n");
 	                    break;
 	                case 3:
 	                	controller_addEmployee(listaEmpleados);
@@ -254,14 +258,24 @@ int funcionMenu(void)
                             printf("No hay informacion para exportar a un archivo.\n\n");
                             break;
                         }
-                        controller_saveAsText("data.csv", listaEmpleados);
-	                	printf("\t\tDatos almacenados en modo Texto correctamente.\n");
+                        if(controller_saveAsText("data.csv", listaEmpleados)==0)
+                        {
+                            printf("\t\tDatos almacenados en modo Texto correctamente.\n");
+                        }
+                        else
+                        {
+                            printf("\t\nNo se pudieron almacenar los datos.\n");
+                        }
 	                    break;
 	                case 9:
-	                	if(controller_saveAsBinary("data.bin",listaEmpleados))
+	                	if(controller_saveAsBinary("data.bin",listaEmpleados)==0)
                         {
                             printf("\t\tDatos almacenados en modo Binario correctamente.\n");
                             cargaBin = 1;
+                        }
+                        else
+                        {
+                            printf("\t\nNo se pudieron almacenar los datos.\n");
                         }
 	                	break;
 	                }

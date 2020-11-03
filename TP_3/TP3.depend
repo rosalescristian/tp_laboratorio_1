@@ -313,3 +313,63 @@
 	"parser.h"
 	"utn.h"
 
+1604368517 source:c:\users\crisp\desktop\tp_laboratorio_1\tp_3\controller.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+	"parser.h"
+	"utn.h"
+
+1604358846 c:\users\crisp\desktop\tp_laboratorio_1\tp_3\linkedlist.h
+
+1604360784 c:\users\crisp\desktop\tp_laboratorio_1\tp_3\controller.h
+
+1604364987 c:\users\crisp\desktop\tp_laboratorio_1\tp_3\employee.h
+
+1604358846 c:\users\crisp\desktop\tp_laboratorio_1\tp_3\parser.h
+
+1604358846 c:\users\crisp\desktop\tp_laboratorio_1\tp_3\utn.h
+
+1604365040 source:c:\users\crisp\desktop\tp_laboratorio_1\tp_3\employee.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+	"parser.h"
+	"utn.h"
+
+1604360203 source:c:\users\crisp\desktop\tp_laboratorio_1\tp_3\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+	"parser.h"
+	"utn.h"
+
+1604358846 source:c:\users\crisp\desktop\tp_laboratorio_1\tp_3\parser.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+	"parser.h"
+	"utn.h"
+
+1604367435 source:c:\users\crisp\desktop\tp_laboratorio_1\tp_3\utn.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+	"parser.h"
+	"utn.h"
+

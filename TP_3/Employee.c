@@ -90,13 +90,13 @@ int employee_setId(Employee* this,char* id)
  * \return -1 si hubo algun error, 0 si fue exitoso
  *
  */
-int employee_getId(Employee* this,int id)
+int employee_getId(Employee* this,int *id)
 {
 	int retorno;
 	retorno = -1;
 	if(this != NULL)
 	{
-	    id=this->id;
+	    *id=this->id;
         retorno = 0;
     }
 	return retorno;
@@ -134,7 +134,7 @@ int employee_getNombre(Employee* this,char* nombre)
 	retorno = -1;
 	if(this != NULL && nombre != NULL)
 	{
-	    strncpy(this->nombre,nombre,sizeof(this->nombre));
+	    strcpy(nombre,this->nombre);
         retorno = 0;
     }
 	return retorno;
@@ -174,7 +174,7 @@ int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas)
 	retorno = -1;
 	if(this != NULL && horasTrabajadas != NULL)
 	{
-        horasTrabajadas = this->horasTrabajadas;
+        *horasTrabajadas = this->horasTrabajadas;
         retorno = 0;
     }
 	return retorno;
@@ -214,7 +214,7 @@ int employee_getSueldo(Employee* this,int* sueldo)
 	retorno = -1;
 	if(this != NULL && sueldo != NULL)
 	{
-        sueldo = this->sueldo;
+        *sueldo = this->sueldo;
         retorno = 0;
     }
 	return retorno;
@@ -418,12 +418,14 @@ int getNombreStr(char *pResultado,
 int getHsTrabajadasStr(char *bNombre,
 				char *pMensaje,
 				char *pMensajeError,
+				int minimoChar,
+				int maximoChar,
 				int minimo,
 				int maximo,
 				int reintentos)
 {
 	int retorno = -1;
-	char buffer[7];
+	char buffer[6];
 
 	if(		bNombre != NULL &&
 			pMensaje != NULL &&
@@ -437,11 +439,11 @@ int getHsTrabajadasStr(char *bNombre,
 			fflush(stdin);
 			fgets(buffer,sizeof(buffer),stdin);
 			buffer[strlen(buffer)-1]='\0';
-			if(strlen(buffer)<=maximo && strlen(buffer)>=minimo)
+			if(strlen(buffer)<=maximoChar && strlen(buffer)>=minimoChar)
 			{
                 if((esNumerico(buffer)==0) && (atoi(buffer)>= minimo) && (atoi(buffer)<=maximo))
                 {
-                    strncpy(bNombre,buffer,strlen(buffer));
+                    strcpy(bNombre,buffer);
                     retorno = 0;
                     break;
                 }
@@ -468,6 +470,8 @@ int getHsTrabajadasStr(char *bNombre,
 int getSueldoStr(char *pResultado,
 				char *pMensaje,
 				char *pMensajeError,
+				int minimoChar,
+				int maximoChar,
 				int minimo,
 				int maximo,
 				int reintentos)
@@ -487,7 +491,7 @@ int getSueldoStr(char *pResultado,
 			fflush(stdin);
 			fgets(buffer,sizeof(buffer),stdin);
 			buffer[strlen(buffer)-1]='\0';
-			if(strlen(buffer)<=maximo && strlen(buffer)>=minimo)
+			if(strlen(buffer)<=maximoChar && strlen(buffer)>=minimoChar)
 			{
                 if((esNumerico(buffer)==0) && (atoi(buffer)>= minimo) && (atoi(buffer)<=maximo))
                 {
@@ -516,19 +520,28 @@ int employee_sortByName(void* dato1,void* dato2)
 
     Employee* a = (Employee*) dato1;
     Employee* b = (Employee*) dato2;
-    int retorno = -2;
+    char nombreStructOne[128];
+    char nombreStructTwo[128];
+    int retorno;
 
-    if(strcmp(a->nombre, b->nombre) == 0)
+    if(dato1 != NULL && dato2 != NULL)
     {
-        retorno = 0;
-    }
-    else if(strcmp(a->nombre, b->nombre) > 0)
-    {
-        retorno = 1;
-    }
-    else
-    {
-        retorno = -1;
+        retorno = -2;
+        employee_getNombre(a,nombreStructOne);
+        employee_getNombre(b,nombreStructTwo);
+
+        if(strcmp(nombreStructOne, nombreStructTwo) == 0)
+        {
+            retorno = 0;
+        }
+        else if(strcmp(nombreStructOne, nombreStructTwo) > 0)
+        {
+            retorno = 1;
+        }
+        else
+        {
+            retorno = -1;
+        }
     }
     return retorno;
 }

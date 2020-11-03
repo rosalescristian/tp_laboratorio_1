@@ -2,7 +2,7 @@
 *
 *   TP N3 - LinkedList
 *   Alumno: Cristian Rosales
-*   Comision: 1G - Turno: Noche
+*   Comision: 1F - Turno: Noche
 *
 *
 */
