@@ -124,8 +124,9 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
 	int retorno;
 	int maxLen;
-	int i;
+	//int i;
 	int idEditar;
+	int bIdStruct;
 	char bId[8];
 	char respuesta;
 	char respuestaDos;
@@ -142,25 +143,39 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 		maxLen = ll_len(pArrayListEmployee);
 		system("cls");
 		printf("\n\n\t\t*** EDICION DE EMPLEADOS ***\n\n");
-		for(i=0;i<maxLen;i++)
+		/*for(i=0;i<maxLen;i++)
 		{
 			aEmployee = ll_get(pArrayListEmployee,i);
 			printf("ID: %d - Nombre: %s - Horas Trabajadas: %d - Sueldo: %d\n",aEmployee->id,aEmployee->nombre,aEmployee->horasTrabajadas,aEmployee->sueldo);
-		}
+		}*/
+		controller_ListEmployee(pArrayListEmployee);
 		if(getIdStr(bId,"\nIngrese el ID el Empleado a modificar: \n","Ha ingresado un ID invalido. Reintente\n",0,maxLen,3)==0)
 		{
 			system("cls");
 			idEditar=atoi(bId);
-			for(int i=0; i<maxLen;i++)
+			/*for(int i=0; i<maxLen;i++)
             {
                 aEmployee = ll_get(pArrayListEmployee,i);
                 if(idEditar==aEmployee->id)
                 {
                     aEmployee=ll_get(pArrayListEmployee,i);
+                    employee_getId(aEmployee,&bIdStruct);
+                    break;
+                }
+            }*/
+            for(int i=0; i<maxLen;i++)
+            {
+                aEmployee = ll_get(pArrayListEmployee,i);
+                employee_getId(aEmployee,&bIdStruct);
+                if(idEditar==bIdStruct)
+                {
+                    aEmployee=ll_get(pArrayListEmployee,i);
                     break;
                 }
             }
-			printf("\nVa a editar el siguiente empleado:\n\nID: %d - Nombre: %s - Hs Trabajadas: %d - Sueldo: %d.\n",aEmployee->id,aEmployee->nombre,aEmployee->horasTrabajadas,aEmployee->sueldo);
+			//printf("\nVa a editar el siguiente empleado:\n\nID: %d - Nombre: %s - Hs Trabajadas: %d - Sueldo: %d.\n",aEmployee->id,aEmployee->nombre,aEmployee->horasTrabajadas,aEmployee->sueldo);
+			printf("\nVa a editar el siguiente empleado:\n\n");
+			controller_PrintEmployee(aEmployee);
             getChar(&respuesta, "Desea proceder? (s/n)\n\n", "La respuesta es invalida, reintente.\n",'n','s',3);
             if(respuesta == 's')
             {
@@ -208,8 +223,11 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
     int retorno;
 	int maxLen;
-	int i;
+//	int i;
 	int idEditar;
+	int bIdPointer;
+	int bIdStruct;
+	int maxId;
 	char bId[12];
 	char respuesta;
     int deleteId = -1;
@@ -222,16 +240,26 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 	{
 		respuesta = 'n';
 		maxLen = ll_len(pArrayListEmployee);
-		for(i=0;i<maxLen;i++)
+		/*for(i=0;i<maxLen;i++)
 		{
 			aEmployee = ll_get(pArrayListEmployee,i);
 			printf("ID: %d - Nombre: %s - Horas Trabajadas: %d - Sueldo: %d\n",aEmployee->id,aEmployee->nombre,aEmployee->horasTrabajadas,aEmployee->sueldo);
-		}
+		}*/
+		controller_ListEmployee(pArrayListEmployee);
 		if(maxLen > 1)
         {
+            for(int i=0;i<maxLen;i++)
+            {
+                aEmployee = ll_get(pArrayListEmployee,i);
+                employee_getId(aEmployee,&bIdPointer);
+                if(bIdPointer > maxId)
+                {
+                    maxId = bIdPointer;
+                }
+            }
             getIdStr(bId,"\n\n Ingrese el ID el Empleado a Eliminar: \t","Ha ingresado un ID invalido. Reintente\n",0,maxLen,3);
 			idEditar=atoi(bId);
-			for(int i=0; i<maxLen;i++)
+			/*for(int i=0; i<maxLen;i++)
             {
                 aEmployee = ll_get(pArrayListEmployee,i);
                 if(idEditar==aEmployee->id)
@@ -240,8 +268,21 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
                     deleteId = i;
                     break;
                 }
+            }*/
+            for(int i=0; i<maxLen;i++)
+            {
+                aEmployee = ll_get(pArrayListEmployee,i);
+                employee_getId(aEmployee,&bIdStruct);
+                if(idEditar==bIdStruct)
+                {
+                    aEmployee=ll_get(pArrayListEmployee,i);
+                    deleteId = i;
+                    break;
+                }
             }
-			printf("\nVa a borrar el siguiente empleado:\nID: %d - Nombre: %s - Hs Trabajadas: %d - Sueldo: %d.\n\t",aEmployee->id,aEmployee->nombre,aEmployee->horasTrabajadas,aEmployee->sueldo);
+			//printf("\nVa a borrar el siguiente empleado:\nID: %d - Nombre: %s - Hs Trabajadas: %d - Sueldo: %d.\n\t",aEmployee->id,aEmployee->nombre,aEmployee->horasTrabajadas,aEmployee->sueldo);
+			printf("\nVa a borrar el siguiente empleado:\n");
+			controller_PrintEmployee(aEmployee);
             getChar(&respuesta, "\nDesea proceder? (s/n)\t", "La respuesta es invalida, reintente.\n",'n','s',3);
             if(respuesta != 'n')
             {
@@ -253,7 +294,9 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
         else if(maxLen == 1)
 		{
 		    aEmployee = ll_get(pArrayListEmployee,0);
-			printf("\nVa a borrar el siguiente empleado:\nID: %d - Nombre: %s - Hs Trabajadas: %d - Sueldo: %d.\n\t",aEmployee->id,aEmployee->nombre,aEmployee->horasTrabajadas,aEmployee->sueldo);
+			//printf("\nVa a borrar el siguiente empleado:\nID: %d - Nombre: %s - Hs Trabajadas: %d - Sueldo: %d.\n\t",aEmployee->id,aEmployee->nombre,aEmployee->horasTrabajadas,aEmployee->sueldo);
+            printf("\nVa a borrar el siguiente empleado:\n");
+            controller_PrintEmployee(aEmployee);
             getChar(&respuesta, "\nDesea proceder? (s/n)\t", "La respuesta es invalida, reintente.\n",'n','s',3);
             if(respuesta != 'n')
             {
@@ -290,7 +333,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 		for(i=0;i<maxLen;i++)
 		{
 			aEmployee = ll_get(pArrayListEmployee,i);
-			printf("ID: %d - Nombre: %s - Horas Trabajadas: %d - Sueldo: %d\n",aEmployee->id,aEmployee->nombre,aEmployee->horasTrabajadas,aEmployee->sueldo);
+			controller_PrintEmployee(aEmployee);
 		}
 	}
     return 1;
@@ -344,10 +387,14 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
             for(i=0; i< ll_len(pArrayListEmployee); i++)
             {
                 aEmployee = ll_get(pArrayListEmployee,i);
-                idAux=aEmployee->id;
+                /*idAux=aEmployee->id;
                 strcpy(nombreAux,aEmployee->nombre);
                 horasAux=aEmployee->horasTrabajadas;
-                sueldoAux=aEmployee->sueldo;
+                sueldoAux=aEmployee->sueldo;*/
+                employee_getId(aEmployee,&idAux);
+                employee_getNombre(aEmployee,nombreAux);
+                employee_getHorasTrabajadas(aEmployee,&horasAux);
+                employee_getSueldo(aEmployee,&sueldoAux);
                 fprintf(pArchivo,"%d,%s,%d,%d\n",idAux,nombreAux,horasAux,sueldoAux);
             }
             fclose(pArchivo);
@@ -391,4 +438,51 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     return retorno;
 }
 
+/** \brief Listar empleados
+ *
+ * \param path char*
+ * \param pArrayListEmployee LinkedList*
+ * \return int
+ *
+ */
+int controller_ListEmployees(LinkedList* pArrayListEmployee)
+{
+	int i;
+	int maxLen;
+	Employee* aEmployee;
 
+	if(pArrayListEmployee != NULL)
+	{
+		maxLen = ll_len(pArrayListEmployee);
+		for(i=0;i<maxLen;i++)
+		{
+			aEmployee = ll_get(pArrayListEmployee,i);
+			controller_PrintEmployee(aEmployee);
+		}
+	}
+    return 1;
+}
+
+/** \brief Listar empleados
+ *
+ * \param path char*
+ * \param pArrayListEmployee LinkedList*
+ * \return int
+ *
+ */
+void controller_PrintEmployee(void* this)
+{
+	int idStruct;
+    char nombreStruct[128];
+    int horasTrabajadasStruct;
+    int sueldoStruct;
+
+	if(this != NULL)
+	{
+		employee_getId(this, &idStruct);
+		employee_getNombre(this, nombreStruct);
+		employee_getHorasTrabajadas(this, &horasTrabajadasStruct);
+		employee_getSueldo(this, &sueldoStruct);
+		printf("ID: %6d - Nombre: %-20s - Horas Trabajadas: %6d - Sueldo: %9d\n",idStruct,nombreStruct,horasTrabajadasStruct,sueldoStruct);
+    }
+}

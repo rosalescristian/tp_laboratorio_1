@@ -90,13 +90,13 @@ int employee_setId(Employee* this,char* id)
  * \return -1 si hubo algun error, 0 si fue exitoso
  *
  */
-int employee_getId(Employee* this,int id)
+int employee_getId(Employee* this,int *id)
 {
 	int retorno;
 	retorno = -1;
 	if(this != NULL)
 	{
-	    id=this->id;
+	    *id=this->id;
         retorno = 0;
     }
 	return retorno;
@@ -174,7 +174,7 @@ int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas)
 	retorno = -1;
 	if(this != NULL && horasTrabajadas != NULL)
 	{
-        horasTrabajadas = this->horasTrabajadas;
+        *horasTrabajadas = this->horasTrabajadas;
         retorno = 0;
     }
 	return retorno;
@@ -214,7 +214,7 @@ int employee_getSueldo(Employee* this,int* sueldo)
 	retorno = -1;
 	if(this != NULL && sueldo != NULL)
 	{
-        sueldo = this->sueldo;
+        *sueldo = this->sueldo;
         retorno = 0;
     }
 	return retorno;
@@ -516,19 +516,28 @@ int employee_sortByName(void* dato1,void* dato2)
 
     Employee* a = (Employee*) dato1;
     Employee* b = (Employee*) dato2;
+    char nombreStructOne[128];
+    char nombreStructTwo[128];
     int retorno = -2;
 
-    if(strcmp(a->nombre, b->nombre) == 0)
+    if(dato1 != NULL && dato2 != NULL)
     {
-        retorno = 0;
-    }
-    else if(strcmp(a->nombre, b->nombre) > 0)
-    {
-        retorno = 1;
-    }
-    else
-    {
-        retorno = -1;
+        retorno = -2;
+        employee_getNombre(a,nombreStructOne);
+        employee_getNombre(b,nombreStructTwo);
+
+        if(strcmp(nombreStructOne, nombreStructTwo) == 0)
+        {
+            retorno = 0;
+        }
+        else if(strcmp(nombreStructOne, nombreStructTwo) > 0)
+        {
+            retorno = 1;
+        }
+        else
+        {
+            retorno = -1;
+        }
     }
     return retorno;
 }
@@ -544,9 +553,10 @@ int findPushEmployeeByName(LinkedList* this)
     int retorno = -1;
     int maxLen;
     int auxId;
+    int employeeId;
     char auxNombre[256];
     char replace = 'n';
-
+    char employeeName[256];
     Employee* auxEmployee;
 
     if(this != NULL)
@@ -557,14 +567,19 @@ int findPushEmployeeByName(LinkedList* this)
             for(int i = 0; i<maxLen;i++)
             {
                 auxEmployee = ll_get(this,i);
-                if(strcmp(auxEmployee->nombre,auxNombre)==0)
+                employee_getNombre(auxEmployee,employeeName);
+                //if(strcmp(auxEmployee->nombre,auxNombre)==0)
+                if(strcmp(employeeName,auxNombre)==0)
                 {
-                    printf("\n\nEl empleado se encuentra con el ID %d en la posicion Nro %d en la lista.\n\n",auxEmployee->id,i);
+                    employee_getId(auxEmployee,&employeeId);
+                    //printf("\n\nEl empleado se encuentra con el ID %d en la posicion Nro %d en la lista.\n\n",auxEmployee->id,i);
+                    printf("\n\nEl empleado se encuentra con el ID %d en la posicion Nro %d en la lista.\n\n",employeeId,i);
                     retorno = 0;
                     getChar(&replace,"Desea anteponer otro empleado? (s/n)\n","\nHa ingresado una respuesta Invalida. Reintente.\n",'n','s',3);
                     if(replace == 's')
                     {
-                        auxId = auxEmployee->id;
+                        //auxId = auxEmployee->id;
+                        auxId = employeeId;
                         controller_pushEmployee(this,auxId,auxEmployee);
                     }
                     break;
@@ -595,7 +610,7 @@ int controller_pushEmployee(LinkedList* pArrayListEmployee,int auxId, Employee* 
 	int maxLen;
 	int maxId;
 	int replaceIndex;
-
+    int employeeId;
 	char bufferAuxId[8];
 	char bId[8];
 	char bNombre[128];
@@ -614,9 +629,12 @@ int controller_pushEmployee(LinkedList* pArrayListEmployee,int auxId, Employee* 
 		for(int i=0;i<maxLen;i++)
 		{
 			aEmployee = ll_get(pArrayListEmployee,i);
-			if(aEmployee->id > maxId)
+			employee_getId(aEmployee,&employeeId);
+			//if(aEmployee->id > maxId)
+			if(employeeId > maxId)
 			{
-				maxId = aEmployee->id;
+				//maxId = aEmployee->id;
+				maxId = employeeId;
 			}
 		}
 			maxId++;
@@ -660,6 +678,7 @@ int findDeleteEmployeeByName(LinkedList* this)
     int maxLen;
     char auxNombre[256];
     char replace = 'n';
+    char employeeName[256];
 
     Employee* auxEmployee;
 
@@ -671,7 +690,8 @@ int findDeleteEmployeeByName(LinkedList* this)
             for(int i = 0; i<maxLen;i++)
             {
                 auxEmployee = ll_get(this,i);
-                if(strcmp(auxEmployee->nombre,auxNombre)==0)
+                employee_getNombre(auxEmployee,employeeName);
+                if(strcmp(employeeName,auxNombre)==0)
                 {
                     printf("\n\nEl empleado se encuentra con el ID %d en la posicion Nro %d en la lista.\n\n",auxEmployee->id,i);
                     retorno = 0;

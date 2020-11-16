@@ -14,7 +14,7 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 void employee_delete();
 
 int employee_setId(Employee* this,char* id);
-int employee_getId(Employee* this,int id);
+int employee_getId(Employee* this,int *id);
 
 int employee_setNombre(Employee* this,char* nombre);
 int employee_getNombre(Employee* this,char* nombre);
