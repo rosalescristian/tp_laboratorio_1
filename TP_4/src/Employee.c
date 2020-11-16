@@ -568,17 +568,14 @@ int findPushEmployeeByName(LinkedList* this)
             {
                 auxEmployee = ll_get(this,i);
                 employee_getNombre(auxEmployee,employeeName);
-                //if(strcmp(auxEmployee->nombre,auxNombre)==0)
                 if(strcmp(employeeName,auxNombre)==0)
                 {
                     employee_getId(auxEmployee,&employeeId);
-                    //printf("\n\nEl empleado se encuentra con el ID %d en la posicion Nro %d en la lista.\n\n",auxEmployee->id,i);
                     printf("\n\nEl empleado se encuentra con el ID %d en la posicion Nro %d en la lista.\n\n",employeeId,i);
                     retorno = 0;
                     getChar(&replace,"Desea anteponer otro empleado? (s/n)\n","\nHa ingresado una respuesta Invalida. Reintente.\n",'n','s',3);
                     if(replace == 's')
                     {
-                        //auxId = auxEmployee->id;
                         auxId = employeeId;
                         controller_pushEmployee(this,auxId,auxEmployee);
                     }
@@ -630,10 +627,8 @@ int controller_pushEmployee(LinkedList* pArrayListEmployee,int auxId, Employee* 
 		{
 			aEmployee = ll_get(pArrayListEmployee,i);
 			employee_getId(aEmployee,&employeeId);
-			//if(aEmployee->id > maxId)
 			if(employeeId > maxId)
 			{
-				//maxId = aEmployee->id;
 				maxId = employeeId;
 			}
 		}
