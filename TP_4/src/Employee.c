@@ -134,7 +134,7 @@ int employee_getNombre(Employee* this,char* nombre)
 	retorno = -1;
 	if(this != NULL && nombre != NULL)
 	{
-	    strncpy(this->nombre,nombre,sizeof(this->nombre));
+	    strncpy(nombre,this->nombre,sizeof(this->nombre));
         retorno = 0;
     }
 	return retorno;
